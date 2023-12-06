@@ -36,7 +36,7 @@ class UserViewSet(viewsets.ViewSet):
                 password=serializer.validated_data["password"],
                 first_name=serializer.validated_data["first_name"],
                 last_name=serializer.validated_data["last_name"],
-                email=serializer.validated_data["username"],
+                email=serializer.validated_data["email"],
             )
             alien_user = AlienUser.objects.create(
                 user=user,

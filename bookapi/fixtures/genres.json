@@ -1,0 +1,44 @@
+[
+  {
+    "model": "bookapi.genre",
+    "pk": 1,
+    "fields": {
+      "label": "Thriller"
+    }
+  },
+  {
+    "model": "bookapi.genre",
+    "pk": 2,
+    "fields": {
+      "label": "Science Fiction"
+    }
+  },
+  {
+    "model": "bookapi.genre",
+    "pk": 3,
+    "fields": {
+      "label": "Romance"
+    }
+  },
+  {
+    "model": "bookapi.genre",
+    "pk": 4,
+    "fields": {
+      "label": "Fantasy"
+    }
+  },
+  {
+    "model": "bookapi.genre",
+    "pk": 5,
+    "fields": {
+      "label": "Graphic Novel"
+    }
+  },
+  {
+    "model": "bookapi.genre",
+    "pk": 6,
+    "fields": {
+      "label": "Children's"
+    }
+  }
+]

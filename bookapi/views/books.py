@@ -15,6 +15,8 @@ class SimpleBookSerializer(serializers.ModelSerializer):
             "image_url",
             "content",
             "author",
+            "publication_date",
+            "page_count",
         ]
 
 
@@ -35,6 +37,7 @@ class BookSerializer(serializers.ModelSerializer):
             "genre",
             "title",
             "publication_date",
+            "page_count",
             "image_url",
             "content",
             "author",
@@ -66,11 +69,11 @@ class BookViewSet(viewsets.ViewSet):
         image_url = request.data.get("image_url")
         content = request.data.get("content")
         author = request.data.get("author")
+        page_count = request.data.get("page_count")
 
         # Create a book database row first, so you have a
         # primary key to work with
         book = Book.objects.create(
-            # maybe issues with alien_user /  request.user
             alien_user=alien_user,
             genre=genre,
             title=title,
@@ -78,6 +81,7 @@ class BookViewSet(viewsets.ViewSet):
             image_url=image_url,
             content=content,
             author=author,
+            page_count=page_count,
         )
 
         serializer = BookSerializer(book, context={"request": request})
@@ -99,6 +103,8 @@ class BookViewSet(viewsets.ViewSet):
                 book.image_url = serializer.validated_data["image_url"]
                 book.content = serializer.validated_data["content"]
                 book.author = serializer.validated_data["author"]
+                book.page_count = serializer.validated_data["page_count"]
+                book.publication_date = serializer.validated_data["publication_date"]
                 book.save()
 
                 serializer = BookSerializer(book, context={"request": request})
