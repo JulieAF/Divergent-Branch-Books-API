@@ -1,0 +1,32 @@
+[
+  {
+    "model": "bookapi.review",
+    "pk": 1,
+    "fields": {
+      "book": 1,
+      "alien_user": 1,
+      "content": "I love this book!",
+      "created_on": "2023-12-6"
+    }
+  },
+  {
+    "model": "bookapi.review",
+    "pk": 2,
+    "fields": {
+      "book": 2,
+      "alien_user": 1,
+      "content": "I enjoyed reading this.",
+      "created_on": "2023-12-6"
+    }
+  },
+  {
+    "model": "bookapi.review",
+    "pk": 3,
+    "fields": {
+      "book": 3,
+      "alien_user": 2,
+      "content": "Not for me.",
+      "created_on": "2023-12-6"
+    }
+  }
+]

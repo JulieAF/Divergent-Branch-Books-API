@@ -10,6 +10,7 @@ class Book(models.Model):
     genre = models.ForeignKey("Genre", on_delete=models.CASCADE, related_name="books")
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=200)
-    publication_date = models.DateField(auto_now_add=True)
+    page_count = models.CharField(max_length=200)
     image_url = models.URLField()
     content = models.CharField(max_length=200)
+    publication_date = models.CharField(max_length=200, default="default_value")

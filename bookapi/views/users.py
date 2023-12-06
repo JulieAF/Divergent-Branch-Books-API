@@ -20,7 +20,7 @@ class AlienUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = AlienUser
-        fields = ("user", "active", "profile_image_url", "bio")
+        fields = ("user", "profile_image_url", "bio")
 
 
 class UserViewSet(viewsets.ViewSet):
@@ -36,13 +36,15 @@ class UserViewSet(viewsets.ViewSet):
                 password=serializer.validated_data["password"],
                 first_name=serializer.validated_data["first_name"],
                 last_name=serializer.validated_data["last_name"],
-                email=serializer.validated_data["username"],
+                email=serializer.validated_data["email"],
             )
             alien_user = AlienUser.objects.create(
                 user=user,
-                active=True,
-                profile_image_url=request.data.get("profile_image_url"),
-                bio=request.data.get("bio"),
+                profile_image_url=request.data.get(
+                    "profile_image_url",
+                    "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/13-pilot.png",
+                ),
+                bio=request.data.get("bio", "Hey, I am new to Divergent Branch Books!"),
             )
             token, created = Token.objects.get_or_create(user=user)
             return Response({"token": token.key}, status=status.HTTP_201_CREATED)

@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework import serializers
 from bookapi.models import Book, AlienUser, Genre
@@ -15,6 +15,8 @@ class SimpleBookSerializer(serializers.ModelSerializer):
             "image_url",
             "content",
             "author",
+            "publication_date",
+            "page_count",
         ]
 
 
@@ -35,6 +37,7 @@ class BookSerializer(serializers.ModelSerializer):
             "genre",
             "title",
             "publication_date",
+            "page_count",
             "image_url",
             "content",
             "author",
@@ -42,7 +45,19 @@ class BookSerializer(serializers.ModelSerializer):
         ]
 
 
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the owner of the object.
+        return obj.alien_user.user == request.user
+
+
 class BookViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
     def list(self, request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True, context={"request": request})
@@ -66,11 +81,11 @@ class BookViewSet(viewsets.ViewSet):
         image_url = request.data.get("image_url")
         content = request.data.get("content")
         author = request.data.get("author")
+        page_count = request.data.get("page_count")
 
         # Create a book database row first, so you have a
         # primary key to work with
         book = Book.objects.create(
-            # maybe issues with alien_user /  request.user
             alien_user=alien_user,
             genre=genre,
             title=title,
@@ -78,6 +93,7 @@ class BookViewSet(viewsets.ViewSet):
             image_url=image_url,
             content=content,
             author=author,
+            page_count=page_count,
         )
 
         serializer = BookSerializer(book, context={"request": request})
@@ -95,10 +111,11 @@ class BookViewSet(viewsets.ViewSet):
                 # book.alien_user = serializer.validated_data["alien_user"]
                 book.genre = serializer.validated_data["genre"]
                 book.title = serializer.validated_data["title"]
-                # book.publication_date = serializer.validated_data["publication_date"]
                 book.image_url = serializer.validated_data["image_url"]
                 book.content = serializer.validated_data["content"]
                 book.author = serializer.validated_data["author"]
+                book.page_count = serializer.validated_data["page_count"]
+                book.publication_date = serializer.validated_data["publication_date"]
                 book.save()
 
                 serializer = BookSerializer(book, context={"request": request})
