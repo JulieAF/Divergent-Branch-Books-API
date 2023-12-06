@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework import serializers
 from bookapi.models import Book, AlienUser, Genre
@@ -45,7 +45,19 @@ class BookSerializer(serializers.ModelSerializer):
         ]
 
 
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the owner of the object.
+        return obj.alien_user.user == request.user
+
+
 class BookViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
     def list(self, request):
         books = Book.objects.all()
         serializer = BookSerializer(books, many=True, context={"request": request})
@@ -99,7 +111,6 @@ class BookViewSet(viewsets.ViewSet):
                 # book.alien_user = serializer.validated_data["alien_user"]
                 book.genre = serializer.validated_data["genre"]
                 book.title = serializer.validated_data["title"]
-                # book.publication_date = serializer.validated_data["publication_date"]
                 book.image_url = serializer.validated_data["image_url"]
                 book.content = serializer.validated_data["content"]
                 book.author = serializer.validated_data["author"]

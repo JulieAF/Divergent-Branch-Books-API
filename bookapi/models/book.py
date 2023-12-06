@@ -13,4 +13,4 @@ class Book(models.Model):
     page_count = models.CharField(max_length=200)
     image_url = models.URLField()
     content = models.CharField(max_length=200)
-    publication_date = models.CharField(max_length=200)
+    publication_date = models.CharField(max_length=200, default="default_value")

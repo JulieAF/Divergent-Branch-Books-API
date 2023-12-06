@@ -15,8 +15,8 @@ router.register(r"reviews", ReviewViewSet, "review")
 
 urlpatterns = [
     path("", include(router.urls)),
-    path("login", UserViewSet.as_view({"book": "user_login"}), name="login"),
+    path("login", UserViewSet.as_view({"post": "user_login"}), name="login"),
     path(
-        "register", UserViewSet.as_view({"book": "register_account"}), name="register"
+        "register", UserViewSet.as_view({"post": "register_account"}), name="register"
     ),
 ]

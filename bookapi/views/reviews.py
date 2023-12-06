@@ -1,4 +1,4 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
 from rest_framework.response import Response
 from rest_framework import serializers
 from bookapi.models import Review, AlienUser, Book
@@ -10,8 +10,6 @@ class SimpleReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = [
-            "book",
-            "alien_user",
             "content",
         ]
 
@@ -29,17 +27,27 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = [
             "id",
-            # "user",
             "book",
             "alien_user",
             "content",
             "is_owner",
             "created_on",
         ]
-        # read_only_field = ["user"]
+
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Custom permission to only allow owners of an object to edit it.
+    """
+
+    def has_object_permission(self, request, view, obj):
+        # Write permissions are only allowed to the owner of the object.
+        return obj.alien_user.user == request.user
 
 
 class ReviewViewSet(viewsets.ViewSet):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
     def list(self, request):
         comments = Review.objects.all()
         serializer = ReviewSerializer(comments, many=True, context={"request": request})
@@ -83,8 +91,8 @@ class ReviewViewSet(viewsets.ViewSet):
 
             serializer = SimpleReviewSerializer(data=request.data)
             if serializer.is_valid():
-                review.book = serializer.validated_data["book"]
-                review.alien_user = serializer.validated_data["alien_user"]
+                # review.book = serializer.validated_data["book"]
+                # review.alien_user = serializer.validated_data["alien_user"]
                 review.content = serializer.validated_data["content"]
                 # review.created_on = serializer.validated_data["created_on"]
                 review.save()
