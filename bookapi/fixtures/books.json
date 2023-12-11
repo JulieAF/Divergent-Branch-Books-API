@@ -10,7 +10,8 @@
       "publication_date": "2005-09-27",
       "page_count": "498",
       "image_url": "https://th.bing.com/th/id/OIG.JY9Ck3QEYslOSqwdYyFL?pid=ImgGn",
-      "content": "You know what I am. Say it.. Alien."
+      "content": "You know what I am. Say it.. Alien.",
+      "created_on": "2023-12-7"
     }
   },
   {
@@ -21,10 +22,11 @@
       "genre": 6,
       "title": "Green Eggs and Ham",
       "author": "Dr. Seuss",
-      "publication_date": "1960-12-1960",
+      "publication_date": "1960-08-12",
       "page_count": "64",
       "image_url": "https://th.bing.com/th/id/OIG.EHYNGM9pyFkc1z8Fclkx?pid=ImgGn",
-      "content": "Would you like them here or there?"
+      "content": "Would you like them here or there?",
+      "created_on": "2023-12-6"
     }
   },
   {
@@ -37,8 +39,9 @@
       "author": "Margaret Atwood",
       "publication_date": "1985-02-17",
       "page_count": "314",
-      "image_url": "https://example.com/image3.jpg",
-      "content": "Under his eye."
+      "image_url": "https://th.bing.com/th/id/OIG.VnxXIi_bWtBUxZRKjyqo?w=1024&h=1024&rs=1&pid=ImgDetMain",
+      "content": "Under his eye.",
+      "created_on": "2023-12-5"
     }
   }
 ]

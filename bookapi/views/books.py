@@ -42,6 +42,7 @@ class BookSerializer(serializers.ModelSerializer):
             "content",
             "author",
             "is_owner",
+            "created_on",
         ]
 
 
@@ -82,6 +83,7 @@ class BookViewSet(viewsets.ViewSet):
         content = request.data.get("content")
         author = request.data.get("author")
         page_count = request.data.get("page_count")
+        created_on = request.data.get("created_on")
 
         # Create a book database row first, so you have a
         # primary key to work with
@@ -94,6 +96,7 @@ class BookViewSet(viewsets.ViewSet):
             content=content,
             author=author,
             page_count=page_count,
+            created_on=created_on,
         )
 
         serializer = BookSerializer(book, context={"request": request})

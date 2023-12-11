@@ -1,0 +1,38 @@
+[
+  {
+    "model": "bookapi.alienuser",
+    "pk": 1,
+    "fields": {
+      "bio": "Hey, I am new to Divergent Branch Books!",
+      "profile_image_url": "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/13-pilot.png",
+      "user": 1
+    }
+  },
+  {
+    "model": "bookapi.alienuser",
+    "pk": 2,
+    "fields": {
+      "bio": "Hey, I am new to Divergent Branch Books!",
+      "profile_image_url": "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/13-pilot.png",
+      "user": 2
+    }
+  },
+  {
+    "model": "bookapi.alienuser",
+    "pk": 3,
+    "fields": {
+      "bio": "I am from Yertis. I love romance novels!",
+      "profile_image_url": "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/19-teal.png",
+      "user": 3
+    }
+  },
+  {
+    "model": "bookapi.alienuser",
+    "pk": 4,
+    "fields": {
+      "bio": "Sup dudes!!",
+      "profile_image_url": "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/21-yoyo.png",
+      "user": 4
+    }
+  }
+]

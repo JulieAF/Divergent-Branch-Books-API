@@ -64,3 +64,18 @@ class UserViewSet(viewsets.ViewSet):
             return Response(
                 {"error": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
             )
+
+    def list(self, request):
+        alien_users = AlienUser.objects.all()
+        serializer = AlienUserSerializer(alien_users, many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+
+    def retrieve(self, request, pk=None):
+        try:
+            alien_user = AlienUser.objects.get(pk=pk)
+            serializer = AlienUserSerializer(alien_user)
+            print(serializer.data)
+            return Response(serializer.data)
+        except AlienUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
