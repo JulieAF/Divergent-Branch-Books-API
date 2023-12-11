@@ -12,6 +12,7 @@ router = DefaultRouter(trailing_slash=False)
 router.register(r"books", BookViewSet, "book")
 router.register(r"genres", GenreViewSet, "genre")
 router.register(r"reviews", ReviewViewSet, "review")
+router.register(r"alien_users", UserViewSet, "alien_user")
 
 urlpatterns = [
     path("", include(router.urls)),

@@ -1,1 +1,46 @@
-
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$5pPQuapffRxfzrhRVekigy$fou7ODrN9TbYl64zWwvVw28f2/H60V4XhB6lc3h+NPU=",
+      "username": "Galaxoid_Z",
+      "first_name": "Galaxoid",
+      "last_name": "Zork",
+      "email": "GalaxoidZ@flyawayzone.com"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$FIUec2CqcJ4ShBzNaFM7hM$Jup7F+OVIZ5e5O2/SnG8Bi/Kg/WLRa+SxgJ/ebgn3Ww=",
+      "username": "blorg_iz_back",
+      "first_name": "Blorg",
+      "last_name": "Glu",
+      "email": "BlorgG@sloply.com"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$K2AgZP2CaHYVreJVI0Pqz6$I/lDoPkHYs2w7QkWDJmINVOBiF4njdVpTuUB23UdsZE=",
+      "username": "p_bleek",
+      "first_name": "Phloob",
+      "last_name": "Bleeker",
+      "email": "pbleek@xenoid.com"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+      "password": "pbkdf2_sha256$720000$l5cnl2YoFdxWWsSvwAbHRi$RzbpGK3nJuJkkzPnkdnjchAwNOnMvDpW268CmNOKbpo=",
+      "username": "splag_iz_kool",
+      "first_name": "Spag",
+      "last_name": "Gernuf",
+      "email": "splagizkool@wilaz.com"
+    }
+  }
+]
