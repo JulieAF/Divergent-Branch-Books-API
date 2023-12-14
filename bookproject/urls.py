@@ -1,4 +1,3 @@
-from django.contrib import admin
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
 from bookapi.views import (
@@ -13,6 +12,7 @@ router.register(r"books", BookViewSet, "book")
 router.register(r"genres", GenreViewSet, "genre")
 router.register(r"reviews", ReviewViewSet, "review")
 router.register(r"alien_users", UserViewSet, "alien_user")
+
 
 urlpatterns = [
     path("", include(router.urls)),
