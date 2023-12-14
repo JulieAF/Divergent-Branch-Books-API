@@ -65,17 +65,36 @@ class UserViewSet(viewsets.ViewSet):
                 {"error": "Invalid Credentials"}, status=status.HTTP_400_BAD_REQUEST
             )
 
+    @action(detail=False, methods=["get"], url_path="currentUser")
+    def get_alien_user(self, request):
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication required"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        # Filter ALienUser objects for the current authenticated user
+        alien_user = AlienUser.objects.filter(user=request.user).first()
+
+        # Check if the Alien User exists
+        if alien_user:
+            serializer = AlienUserSerializer(alien_user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {"error": "Alien User not found"}, status=status.HTTP_404_NOT_FOUND
+            )
+
     def list(self, request):
         alien_users = AlienUser.objects.all()
         serializer = AlienUserSerializer(alien_users, many=True)
-        print(serializer.data)
         return Response(serializer.data)
 
     def retrieve(self, request, pk=None):
         try:
             alien_user = AlienUser.objects.get(pk=pk)
             serializer = AlienUserSerializer(alien_user)
-            print(serializer.data)
             return Response(serializer.data)
         except AlienUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
