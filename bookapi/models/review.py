@@ -8,5 +8,5 @@ class Review(models.Model):
     alien_user = models.ForeignKey(
         "AlienUser", on_delete=models.CASCADE, related_name="reviews"
     )
-    content = models.CharField(max_length=200)
+    content = models.CharField(max_length=3000)
     created_on = models.DateField(auto_now_add=True)
