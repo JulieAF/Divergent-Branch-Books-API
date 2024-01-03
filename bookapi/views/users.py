@@ -91,10 +91,33 @@ class UserViewSet(viewsets.ViewSet):
         serializer = AlienUserSerializer(alien_users, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
+    @action(detail=False, methods=["put"], url_path="alien_user/update")
+    def update_alien_user_profile(self, request, pk=None):
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication required"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
         try:
-            alien_user = AlienUser.objects.get(pk=pk)
-            serializer = AlienUserSerializer(alien_user)
-            return Response(serializer.data)
+            alien_user = AlienUser.objects.filter(pk=pk, user=request.user).first()
         except AlienUser.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {
+                    "error": "Alien User not found or you don't have permission to modify this user's profile"
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Update profile_image_url and bio if provided in the request data
+        if "profile_image_url" in request.data:
+            alien_user.profile_image_url = request.data["profile_image_url"]
+        if "bio" in request.data:
+            alien_user.bio = request.data["bio"]
+
+        alien_user.save()  # Save the changes to the database
+
+        # Serialize the updated alien_user data and return it in the response
+        serializer = AlienUserSerializer(alien_user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
