@@ -91,7 +91,7 @@ class UserViewSet(viewsets.ViewSet):
         serializer = AlienUserSerializer(alien_users, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=["put"], url_path="alien_user/update")
+    @action(detail=False, methods=["put"], url_path="currentUser/update")
     def update_alien_user_profile(self, request, pk=None):
         # Ensure the user is authenticated
         if not request.user.is_authenticated:
