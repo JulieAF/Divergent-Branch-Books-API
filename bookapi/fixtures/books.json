@@ -3,7 +3,7 @@
     "model": "bookapi.book",
     "pk": 1,
     "fields": {
-      "alien_user": 1,
+      "alien_user": 2,
       "genre": 3,
       "title": "Twilight",
       "author": "Stephenie Meyer",
@@ -18,7 +18,7 @@
     "model": "bookapi.book",
     "pk": 2,
     "fields": {
-      "alien_user": 1,
+      "alien_user": 2,
       "genre": 6,
       "title": "Green Eggs and Ham",
       "author": "Dr. Seuss",
