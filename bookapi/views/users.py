@@ -101,7 +101,7 @@ class UserViewSet(viewsets.ViewSet):
             )
 
         try:
-            alien_user = AlienUser.objects.filter(pk=pk, user=request.user).first()
+            alien_user = AlienUser.objects.filter(user=request.user).first()
         except AlienUser.DoesNotExist:
             return Response(
                 {

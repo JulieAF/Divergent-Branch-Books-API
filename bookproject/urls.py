@@ -21,7 +21,7 @@ urlpatterns = [
         "register", UserViewSet.as_view({"post": "register_account"}), name="register"
     ),
     path(
-        "alien_users/<int:pk>/update/",
+        "alien_users/currentUser/update",
         UserViewSet.as_view({"put": "update_alien_user_profile"}),
         name="update_alien_user",
     ),
