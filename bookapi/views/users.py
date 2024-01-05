@@ -91,6 +91,15 @@ class UserViewSet(viewsets.ViewSet):
         serializer = AlienUserSerializer(alien_users, many=True)
         return Response(serializer.data)
 
+    def retrieve(self, request, pk=None):
+        try:
+            alien_user = AlienUser.objects.get(pk=pk)
+            serializer = AlienUserSerializer(alien_user, context={"request": request})
+            return Response(serializer.data)
+
+        except alien_user.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
     @action(detail=False, methods=["put"], url_path="currentUser/update")
     def update_alien_user_profile(self, request, pk=None):
         # Ensure the user is authenticated
