@@ -42,7 +42,7 @@ class UserViewSet(viewsets.ViewSet):
                 user=user,
                 profile_image_url=request.data.get(
                     "profile_image_url",
-                    "https://lparchive.org/Gazillionaire-Deluxe/Update%2051/13-pilot.png",
+                    "https://www.bing.com/th?id=OUG.1C0CCFDCB504B6B37B20C5F55E6272EA&w=236&c=11&rs=1&qlt=90&bgcl=ececec&o=6&pid=PersonalBing&p=0",
                 ),
                 bio=request.data.get("bio", "Hey, I am new to Divergent Branch Books!"),
             )
@@ -91,10 +91,42 @@ class UserViewSet(viewsets.ViewSet):
         serializer = AlienUserSerializer(alien_users, many=True)
         return Response(serializer.data)
 
-    def retrieve(self, request, pk=None):
+    def retrieve_by_user_id(self, request, user_id):
         try:
-            alien_user = AlienUser.objects.get(pk=pk)
-            serializer = AlienUserSerializer(alien_user)
+            alien_user = AlienUser.objects.get(user__id=user_id)
+            serializer = AlienUserSerializer(alien_user, context={"request": request})
             return Response(serializer.data)
+
         except AlienUser.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+    @action(detail=False, methods=["put"], url_path="currentUser/update")
+    def update_alien_user_profile(self, request, pk=None):
+        # Ensure the user is authenticated
+        if not request.user.is_authenticated:
+            return Response(
+                {"error": "Authentication required"},
+                status=status.HTTP_401_UNAUTHORIZED,
+            )
+
+        try:
+            alien_user = AlienUser.objects.filter(user=request.user).first()
+        except AlienUser.DoesNotExist:
+            return Response(
+                {
+                    "error": "Alien User not found or you don't have permission to modify this user's profile"
+                },
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        # Update profile_image_url and bio if provided in the request data
+        if "profile_image_url" in request.data:
+            alien_user.profile_image_url = request.data["profile_image_url"]
+        if "bio" in request.data:
+            alien_user.bio = request.data["bio"]
+
+        alien_user.save()  # Save the changes to the database
+
+        # Serialize the updated alien_user data and return it in the response
+        serializer = AlienUserSerializer(alien_user)
+        return Response(serializer.data, status=status.HTTP_200_OK)

@@ -7,6 +7,7 @@ from bookapi.views import (
     ReviewViewSet,
 )
 
+
 router = DefaultRouter(trailing_slash=False)
 router.register(r"books", BookViewSet, "book")
 router.register(r"genres", GenreViewSet, "genre")
@@ -19,5 +20,15 @@ urlpatterns = [
     path("login", UserViewSet.as_view({"post": "user_login"}), name="login"),
     path(
         "register", UserViewSet.as_view({"post": "register_account"}), name="register"
+    ),
+    path(
+        "alien_users/currentUser/update",
+        UserViewSet.as_view({"put": "update_alien_user_profile"}),
+        name="update_alien_user",
+    ),
+    path(
+        "alien_users/user/<int:user_id>/",
+        UserViewSet.as_view({"get": "retrieve_by_user_id"}),
+        name="retrieve_alien_user_by_user_id",
     ),
 ]
