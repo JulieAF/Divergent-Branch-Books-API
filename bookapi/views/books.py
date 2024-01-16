@@ -26,7 +26,7 @@ class BookSerializer(serializers.ModelSerializer):
     genre = GenreSerializer(many=False)
 
     def get_is_owner(self, obj):
-        # Check if the authenticated user is the owner
+        # checks if the user making the request is the same as the user associated with the AlienUser object of the object being serialized.
         return self.context["request"].user == obj.alien_user.user
 
     class Meta:
