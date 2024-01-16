@@ -14,4 +14,4 @@ class Book(models.Model):
     image_url = models.URLField()
     content = models.CharField(max_length=3000)
     publication_date = models.CharField(max_length=200, default="default_value")
-    created_on = models.DateField(auto_now_add=True)
+    created_on = models.DateTimeField(auto_now_add=True)
